@@ -1,17 +1,24 @@
 package com.project.shopapp.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.shopapp.dtos.CategoryDTO;
+
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/categories")
+@Validated
 public class CategoriesController {
 
     @GetMapping("")
@@ -22,8 +29,8 @@ public class CategoriesController {
     }
 
     @PostMapping("")
-    public ResponseEntity<String> createCategory() {
-        return ResponseEntity.ok("Created category");
+    public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+        return ResponseEntity.ok("Created category: " + categoryDTO.getName());
     }
 
     @PutMapping("/{id}")
@@ -35,5 +42,4 @@ public class CategoriesController {
     public ResponseEntity<String> deleteCategory(@PathVariable String id) {
         return ResponseEntity.ok("Deleted category");
     }
-
 }
